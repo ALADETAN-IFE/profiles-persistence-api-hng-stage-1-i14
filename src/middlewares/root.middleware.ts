@@ -10,7 +10,8 @@ export const rootHandler = (_req: Request, res: Response) => {
     status: "running",
     endpoints: {
       health: "/api/v1/health",
-      profiles: "/api/profiles",
+      v1profiles: "/api/v1/profiles",
+      v2profiles: "/api/profiles",
     },
   });
 };

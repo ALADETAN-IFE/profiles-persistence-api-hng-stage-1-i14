@@ -43,12 +43,14 @@ export type ProfileSumAggregateOutputType = {
 export type ProfileMinAggregateOutputType = {
   id: string | null;
   name: string | null;
+  dataset: string | null;
   gender: string | null;
   gender_probability: number | null;
   sample_size: number | null;
   age: number | null;
   age_group: string | null;
   country_id: string | null;
+  country_name: string | null;
   country_probability: number | null;
   created_at: Date | null;
 };
@@ -56,12 +58,14 @@ export type ProfileMinAggregateOutputType = {
 export type ProfileMaxAggregateOutputType = {
   id: string | null;
   name: string | null;
+  dataset: string | null;
   gender: string | null;
   gender_probability: number | null;
   sample_size: number | null;
   age: number | null;
   age_group: string | null;
   country_id: string | null;
+  country_name: string | null;
   country_probability: number | null;
   created_at: Date | null;
 };
@@ -69,12 +73,14 @@ export type ProfileMaxAggregateOutputType = {
 export type ProfileCountAggregateOutputType = {
   id: number;
   name: number;
+  dataset: number;
   gender: number;
   gender_probability: number;
   sample_size: number;
   age: number;
   age_group: number;
   country_id: number;
+  country_name: number;
   country_probability: number;
   created_at: number;
   _all: number;
@@ -97,12 +103,14 @@ export type ProfileSumAggregateInputType = {
 export type ProfileMinAggregateInputType = {
   id?: true;
   name?: true;
+  dataset?: true;
   gender?: true;
   gender_probability?: true;
   sample_size?: true;
   age?: true;
   age_group?: true;
   country_id?: true;
+  country_name?: true;
   country_probability?: true;
   created_at?: true;
 };
@@ -110,12 +118,14 @@ export type ProfileMinAggregateInputType = {
 export type ProfileMaxAggregateInputType = {
   id?: true;
   name?: true;
+  dataset?: true;
   gender?: true;
   gender_probability?: true;
   sample_size?: true;
   age?: true;
   age_group?: true;
   country_id?: true;
+  country_name?: true;
   country_probability?: true;
   created_at?: true;
 };
@@ -123,12 +133,14 @@ export type ProfileMaxAggregateInputType = {
 export type ProfileCountAggregateInputType = {
   id?: true;
   name?: true;
+  dataset?: true;
   gender?: true;
   gender_probability?: true;
   sample_size?: true;
   age?: true;
   age_group?: true;
   country_id?: true;
+  country_name?: true;
   country_probability?: true;
   created_at?: true;
   _all?: true;
@@ -230,12 +242,14 @@ export type ProfileGroupByArgs<
 export type ProfileGroupByOutputType = {
   id: string;
   name: string;
+  dataset: string;
   gender: string;
   gender_probability: number;
   sample_size: number;
   age: number;
   age_group: string;
   country_id: string;
+  country_name: string;
   country_probability: number;
   created_at: Date;
   _count: ProfileCountAggregateOutputType | null;
@@ -264,12 +278,14 @@ export type ProfileWhereInput = {
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[];
   id?: Prisma.UuidFilter<"Profile"> | string;
   name?: Prisma.StringFilter<"Profile"> | string;
+  dataset?: Prisma.StringFilter<"Profile"> | string;
   gender?: Prisma.StringFilter<"Profile"> | string;
   gender_probability?: Prisma.FloatFilter<"Profile"> | number;
   sample_size?: Prisma.IntFilter<"Profile"> | number;
   age?: Prisma.IntFilter<"Profile"> | number;
   age_group?: Prisma.StringFilter<"Profile"> | string;
   country_id?: Prisma.StringFilter<"Profile"> | string;
+  country_name?: Prisma.StringFilter<"Profile"> | string;
   country_probability?: Prisma.FloatFilter<"Profile"> | number;
   created_at?: Prisma.DateTimeFilter<"Profile"> | Date | string;
 };
@@ -277,12 +293,14 @@ export type ProfileWhereInput = {
 export type ProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
+  dataset?: Prisma.SortOrder;
   gender?: Prisma.SortOrder;
   gender_probability?: Prisma.SortOrder;
   sample_size?: Prisma.SortOrder;
   age?: Prisma.SortOrder;
   age_group?: Prisma.SortOrder;
   country_id?: Prisma.SortOrder;
+  country_name?: Prisma.SortOrder;
   country_probability?: Prisma.SortOrder;
   created_at?: Prisma.SortOrder;
 };
@@ -294,12 +312,14 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<
     AND?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[];
     OR?: Prisma.ProfileWhereInput[];
     NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[];
+    dataset?: Prisma.StringFilter<"Profile"> | string;
     gender?: Prisma.StringFilter<"Profile"> | string;
     gender_probability?: Prisma.FloatFilter<"Profile"> | number;
     sample_size?: Prisma.IntFilter<"Profile"> | number;
     age?: Prisma.IntFilter<"Profile"> | number;
     age_group?: Prisma.StringFilter<"Profile"> | string;
     country_id?: Prisma.StringFilter<"Profile"> | string;
+    country_name?: Prisma.StringFilter<"Profile"> | string;
     country_probability?: Prisma.FloatFilter<"Profile"> | number;
     created_at?: Prisma.DateTimeFilter<"Profile"> | Date | string;
   },
@@ -309,12 +329,14 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<
 export type ProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
+  dataset?: Prisma.SortOrder;
   gender?: Prisma.SortOrder;
   gender_probability?: Prisma.SortOrder;
   sample_size?: Prisma.SortOrder;
   age?: Prisma.SortOrder;
   age_group?: Prisma.SortOrder;
   country_id?: Prisma.SortOrder;
+  country_name?: Prisma.SortOrder;
   country_probability?: Prisma.SortOrder;
   created_at?: Prisma.SortOrder;
   _count?: Prisma.ProfileCountOrderByAggregateInput;
@@ -334,12 +356,14 @@ export type ProfileScalarWhereWithAggregatesInput = {
     | Prisma.ProfileScalarWhereWithAggregatesInput[];
   id?: Prisma.UuidWithAggregatesFilter<"Profile"> | string;
   name?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
+  dataset?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
   gender?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
   gender_probability?: Prisma.FloatWithAggregatesFilter<"Profile"> | number;
   sample_size?: Prisma.IntWithAggregatesFilter<"Profile"> | number;
   age?: Prisma.IntWithAggregatesFilter<"Profile"> | number;
   age_group?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
   country_id?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
+  country_name?: Prisma.StringWithAggregatesFilter<"Profile"> | string;
   country_probability?: Prisma.FloatWithAggregatesFilter<"Profile"> | number;
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string;
 };
@@ -347,12 +371,14 @@ export type ProfileScalarWhereWithAggregatesInput = {
 export type ProfileCreateInput = {
   id: string;
   name: string;
+  dataset?: string;
   gender: string;
   gender_probability: number;
   sample_size: number;
   age: number;
   age_group: string;
   country_id: string;
+  country_name: string;
   country_probability: number;
   created_at?: Date | string;
 };
@@ -360,12 +386,14 @@ export type ProfileCreateInput = {
 export type ProfileUncheckedCreateInput = {
   id: string;
   name: string;
+  dataset?: string;
   gender: string;
   gender_probability: number;
   sample_size: number;
   age: number;
   age_group: string;
   country_id: string;
+  country_name: string;
   country_probability: number;
   created_at?: Date | string;
 };
@@ -373,12 +401,14 @@ export type ProfileUncheckedCreateInput = {
 export type ProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
+  dataset?: Prisma.StringFieldUpdateOperationsInput | string;
   gender?: Prisma.StringFieldUpdateOperationsInput | string;
   gender_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   sample_size?: Prisma.IntFieldUpdateOperationsInput | number;
   age?: Prisma.IntFieldUpdateOperationsInput | number;
   age_group?: Prisma.StringFieldUpdateOperationsInput | string;
   country_id?: Prisma.StringFieldUpdateOperationsInput | string;
+  country_name?: Prisma.StringFieldUpdateOperationsInput | string;
   country_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -386,12 +416,14 @@ export type ProfileUpdateInput = {
 export type ProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
+  dataset?: Prisma.StringFieldUpdateOperationsInput | string;
   gender?: Prisma.StringFieldUpdateOperationsInput | string;
   gender_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   sample_size?: Prisma.IntFieldUpdateOperationsInput | number;
   age?: Prisma.IntFieldUpdateOperationsInput | number;
   age_group?: Prisma.StringFieldUpdateOperationsInput | string;
   country_id?: Prisma.StringFieldUpdateOperationsInput | string;
+  country_name?: Prisma.StringFieldUpdateOperationsInput | string;
   country_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -399,12 +431,14 @@ export type ProfileUncheckedUpdateInput = {
 export type ProfileCreateManyInput = {
   id: string;
   name: string;
+  dataset?: string;
   gender: string;
   gender_probability: number;
   sample_size: number;
   age: number;
   age_group: string;
   country_id: string;
+  country_name: string;
   country_probability: number;
   created_at?: Date | string;
 };
@@ -412,12 +446,14 @@ export type ProfileCreateManyInput = {
 export type ProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
+  dataset?: Prisma.StringFieldUpdateOperationsInput | string;
   gender?: Prisma.StringFieldUpdateOperationsInput | string;
   gender_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   sample_size?: Prisma.IntFieldUpdateOperationsInput | number;
   age?: Prisma.IntFieldUpdateOperationsInput | number;
   age_group?: Prisma.StringFieldUpdateOperationsInput | string;
   country_id?: Prisma.StringFieldUpdateOperationsInput | string;
+  country_name?: Prisma.StringFieldUpdateOperationsInput | string;
   country_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -425,12 +461,14 @@ export type ProfileUpdateManyMutationInput = {
 export type ProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
+  dataset?: Prisma.StringFieldUpdateOperationsInput | string;
   gender?: Prisma.StringFieldUpdateOperationsInput | string;
   gender_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   sample_size?: Prisma.IntFieldUpdateOperationsInput | number;
   age?: Prisma.IntFieldUpdateOperationsInput | number;
   age_group?: Prisma.StringFieldUpdateOperationsInput | string;
   country_id?: Prisma.StringFieldUpdateOperationsInput | string;
+  country_name?: Prisma.StringFieldUpdateOperationsInput | string;
   country_probability?: Prisma.FloatFieldUpdateOperationsInput | number;
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -438,12 +476,14 @@ export type ProfileUncheckedUpdateManyInput = {
 export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
+  dataset?: Prisma.SortOrder;
   gender?: Prisma.SortOrder;
   gender_probability?: Prisma.SortOrder;
   sample_size?: Prisma.SortOrder;
   age?: Prisma.SortOrder;
   age_group?: Prisma.SortOrder;
   country_id?: Prisma.SortOrder;
+  country_name?: Prisma.SortOrder;
   country_probability?: Prisma.SortOrder;
   created_at?: Prisma.SortOrder;
 };
@@ -458,12 +498,14 @@ export type ProfileAvgOrderByAggregateInput = {
 export type ProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
+  dataset?: Prisma.SortOrder;
   gender?: Prisma.SortOrder;
   gender_probability?: Prisma.SortOrder;
   sample_size?: Prisma.SortOrder;
   age?: Prisma.SortOrder;
   age_group?: Prisma.SortOrder;
   country_id?: Prisma.SortOrder;
+  country_name?: Prisma.SortOrder;
   country_probability?: Prisma.SortOrder;
   created_at?: Prisma.SortOrder;
 };
@@ -471,12 +513,14 @@ export type ProfileMaxOrderByAggregateInput = {
 export type ProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
+  dataset?: Prisma.SortOrder;
   gender?: Prisma.SortOrder;
   gender_probability?: Prisma.SortOrder;
   sample_size?: Prisma.SortOrder;
   age?: Prisma.SortOrder;
   age_group?: Prisma.SortOrder;
   country_id?: Prisma.SortOrder;
+  country_name?: Prisma.SortOrder;
   country_probability?: Prisma.SortOrder;
   created_at?: Prisma.SortOrder;
 };
@@ -519,12 +563,14 @@ export type ProfileSelect<
   {
     id?: boolean;
     name?: boolean;
+    dataset?: boolean;
     gender?: boolean;
     gender_probability?: boolean;
     sample_size?: boolean;
     age?: boolean;
     age_group?: boolean;
     country_id?: boolean;
+    country_name?: boolean;
     country_probability?: boolean;
     created_at?: boolean;
   },
@@ -538,12 +584,14 @@ export type ProfileSelectCreateManyAndReturn<
   {
     id?: boolean;
     name?: boolean;
+    dataset?: boolean;
     gender?: boolean;
     gender_probability?: boolean;
     sample_size?: boolean;
     age?: boolean;
     age_group?: boolean;
     country_id?: boolean;
+    country_name?: boolean;
     country_probability?: boolean;
     created_at?: boolean;
   },
@@ -557,12 +605,14 @@ export type ProfileSelectUpdateManyAndReturn<
   {
     id?: boolean;
     name?: boolean;
+    dataset?: boolean;
     gender?: boolean;
     gender_probability?: boolean;
     sample_size?: boolean;
     age?: boolean;
     age_group?: boolean;
     country_id?: boolean;
+    country_name?: boolean;
     country_probability?: boolean;
     created_at?: boolean;
   },
@@ -572,12 +622,14 @@ export type ProfileSelectUpdateManyAndReturn<
 export type ProfileSelectScalar = {
   id?: boolean;
   name?: boolean;
+  dataset?: boolean;
   gender?: boolean;
   gender_probability?: boolean;
   sample_size?: boolean;
   age?: boolean;
   age_group?: boolean;
   country_id?: boolean;
+  country_name?: boolean;
   country_probability?: boolean;
   created_at?: boolean;
 };
@@ -588,12 +640,14 @@ export type ProfileOmit<
 > = runtime.Types.Extensions.GetOmit<
   | "id"
   | "name"
+  | "dataset"
   | "gender"
   | "gender_probability"
   | "sample_size"
   | "age"
   | "age_group"
   | "country_id"
+  | "country_name"
   | "country_probability"
   | "created_at",
   ExtArgs["result"]["profile"]
@@ -609,12 +663,14 @@ export type $ProfilePayload<
     {
       id: string;
       name: string;
+      dataset: string;
       gender: string;
       gender_probability: number;
       sample_size: number;
       age: number;
       age_group: string;
       country_id: string;
+      country_name: string;
       country_probability: number;
       created_at: Date;
     },
@@ -1211,12 +1267,14 @@ export interface Prisma__ProfileClient<
 export interface ProfileFieldRefs {
   readonly id: Prisma.FieldRef<"Profile", "String">;
   readonly name: Prisma.FieldRef<"Profile", "String">;
+  readonly dataset: Prisma.FieldRef<"Profile", "String">;
   readonly gender: Prisma.FieldRef<"Profile", "String">;
   readonly gender_probability: Prisma.FieldRef<"Profile", "Float">;
   readonly sample_size: Prisma.FieldRef<"Profile", "Int">;
   readonly age: Prisma.FieldRef<"Profile", "Int">;
   readonly age_group: Prisma.FieldRef<"Profile", "String">;
   readonly country_id: Prisma.FieldRef<"Profile", "String">;
+  readonly country_name: Prisma.FieldRef<"Profile", "String">;
   readonly country_probability: Prisma.FieldRef<"Profile", "Float">;
   readonly created_at: Prisma.FieldRef<"Profile", "DateTime">;
 }

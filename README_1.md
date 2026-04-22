@@ -144,23 +144,6 @@ npx prisma migrate deploy
 npx prisma migrate status
 ```
 
-## About this Scaffold
-
-This project was generated using the @ifecodes/backend-template scaffold. You can recreate or customize this scaffold using the CLI: 
-
-- Run without installing (recommended): `npx ifecodes-template`
-- Install globally: `npm i -g @ifecodes/backend-template` and run `ifecodes-template`
-
-## Author
-- Name: Fortune Ife Aladetan
-- Email: [contact@ifecodes.xyz](mailto:fortuneifealadetan01@gmail.com)
-- GitHub: [ALADETAN-IFE](https://github.com/ALADETAN-IFE)
-- Portfolio: [ifecodes.xyz](https://www.ifecodes.xyz)
-
 ## Project Notes
 
 This repository started from a backend scaffold and is being adapted for the Stage 1 profile persistence assessment.
-
-## License
-
-MIT

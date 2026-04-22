@@ -1,30 +1,30 @@
 import { Router } from "express";
 import {
-  createProfile,
-  deleteProfile,
-  getProfile,
-  listProfiles,
-  searchProfiles,
-} from "./profiles.controller";
+  createV1Profile,
+  deleteV1Profile,
+  getV1Profile,
+  listV1Profiles,
+  searchV1Profiles,
+} from "@/modules/profiles/profiles.controller";
 import { methodNotAllowedHandler } from "@/middlewares";
 
 const router = Router();
 
 router
   .route("/")
-  .post(createProfile)
-  .get(listProfiles)
+  .post(createV1Profile)
+  .get(listV1Profiles)
   .all(methodNotAllowedHandler(["POST", "GET"]));
 
 router
   .route("/search")
-  .get(searchProfiles)
+  .get(searchV1Profiles)
   .all(methodNotAllowedHandler(["GET"]));
 
 router
   .route("/:id")
-  .get(getProfile)
-  .delete(deleteProfile)
+  .get(getV1Profile)
+  .delete(deleteV1Profile)
   .all(methodNotAllowedHandler(["GET", "DELETE"]));
 
 export default router;
