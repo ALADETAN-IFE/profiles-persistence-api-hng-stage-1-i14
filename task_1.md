@@ -205,7 +205,7 @@ Error handling (external APIs):
 ## Submission
 
 1. Confirm your server is live. Test from multiple networks if you can.
-2. Run `/submit` in `stage-one-backend` and submit the requested URLs.
+2. Run `/submit` in `#stage-one-backend` and submit the requested URLs.
 3. Submit:
    - Your API base URL (`https://yourapp.domain.app`)
    - Your GitHub repo link

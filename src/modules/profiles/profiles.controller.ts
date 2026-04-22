@@ -1,145 +1,134 @@
 import { Request, Response } from "express";
 import {
-  BadRequestError,
-  logger,
-  NotFoundError,
-  UnprocessableEntityError,
-} from "@/utils";
-import {
   createProfileByName,
   deleteProfileById,
   getProfileById,
   listProfilesByFilter,
+  searchProfilesByQuery,
 } from "./profile.service";
-import { ProfileListRecord, ProfileRecord } from "./profile.type";
-
-const getNormalizedName = (body: Request["body"]) => {
-  if (typeof body === "undefined") {
-    throw new BadRequestError("Missing or empty name");
-  }
-
-  const { name } = body as { name?: unknown };
-
-  if (typeof name === "undefined") {
-    throw new BadRequestError("Missing or empty name");
-  }
-
-  if (typeof name !== "string") {
-    throw new UnprocessableEntityError("name must be a string");
-  }
-
-  const normalized = name.trim().toLowerCase();
-
-  if (!normalized) {
-    throw new BadRequestError("Missing or empty name");
-  }
-
-  return normalized;
-};
-
-const getIdParam = (idParam: Request["params"]["id"]) => {
-  if (typeof idParam !== "string") {
-    throw new NotFoundError("Profile not found");
-  }
-
-  return idParam;
-};
+import { ProfileDataset, ProfileRecord } from "./profile.type";
+import {
+  getIdParam,
+  getNormalizedName,
+  parseListProfilesQuery,
+  parseSearchQuery,
+} from "./profile.validation";
 
 const toResponseProfile = (profile: ProfileRecord) => ({
   id: profile.id,
   name: profile.name,
   gender: profile.gender,
   gender_probability: profile.gender_probability,
-  sample_size: profile.sample_size,
   age: profile.age,
   age_group: profile.age_group,
   country_id: profile.country_id,
+  country_name: profile.country_name,
   country_probability: profile.country_probability,
   created_at: profile.created_at.toISOString(),
 });
 
-const getCaseInsensitiveFilter = (
-  value: Request["query"]["gender" | "country_id" | "age_group"],
-  fieldName: string,
-) => {
-  if (typeof value === "undefined") {
-    return undefined;
-  }
-
-  if (Array.isArray(value) || typeof value !== "string") {
-    throw new UnprocessableEntityError(`${fieldName} must be a string`);
-  }
-
-  const normalized = value.trim().toLowerCase();
-  if (!normalized) {
-    return undefined;
-  }
-
-  return normalized;
-};
-
-const toListResponseProfile = (profile: ProfileListRecord) => ({
-  id: profile.id,
-  name: profile.name,
-  gender: profile.gender,
-  age: profile.age,
-  age_group: profile.age_group,
-  country_id: profile.country_id,
+const toV1ResponseProfile = (profile: ProfileRecord) => ({
+  ...toResponseProfile(profile),
+  sample_size: profile.sample_size,
 });
 
-export const createProfile = async (req: Request, res: Response) => {
-  const name = getNormalizedName(req.body);
+const createProfileForDataset =
+  (dataset: ProfileDataset) => async (req: Request, res: Response) => {
+    const name = getNormalizedName(req.body);
 
-  const { profile, alreadyExists } = await createProfileByName(name);
+    const { profile, alreadyExists } = await createProfileByName(name, dataset);
 
-  if (alreadyExists) {
+    if (alreadyExists) {
+      return res.status(200).json({
+        status: "success",
+        message: "Profile already exists",
+        data:
+          dataset === "v1"
+            ? toV1ResponseProfile(profile)
+            : toResponseProfile(profile),
+      });
+    }
+
+    return res.status(201).json({
+      status: "success",
+      data:
+        dataset === "v1"
+          ? toV1ResponseProfile(profile)
+          : toResponseProfile(profile),
+    });
+  };
+
+const getProfileForDataset =
+  (dataset: ProfileDataset) => async (req: Request, res: Response) => {
+    const id = getIdParam(req.params.id);
+    const profile = await getProfileById(id, dataset);
+
     return res.status(200).json({
       status: "success",
-      message: "Profile already exists",
-      data: toResponseProfile(profile),
+      data:
+        dataset === "v1"
+          ? toV1ResponseProfile(profile)
+          : toResponseProfile(profile),
     });
-  }
+  };
 
-  return res.status(201).json({
-    status: "success",
-    data: toResponseProfile(profile),
-  });
-};
+const listProfilesForDataset =
+  (dataset: ProfileDataset) => async (req: Request, res: Response) => {
+    const parsed = parseListProfilesQuery(req.query);
+    const profiles = await listProfilesByFilter(parsed, dataset);
 
-export const getProfile = async (req: Request, res: Response) => {
-  const id = getIdParam(req.params.id);
-  const profile = await getProfileById(id);
+    return res.status(200).json({
+      status: "success",
+      page: profiles.page,
+      limit: profiles.limit,
+      total: profiles.total,
+      data:
+        dataset === "v1"
+          ? profiles.data.map(toV1ResponseProfile)
+          : profiles.data.map(toResponseProfile),
+    });
+  };
 
-  return res.status(200).json({
-    status: "success",
-    data: toResponseProfile(profile),
-  });
-};
+const searchProfilesForDataset =
+  (dataset: ProfileDataset) => async (req: Request, res: Response) => {
+    const { q, page, limit } = parseSearchQuery(req.query);
+    const profiles = await searchProfilesByQuery(q, page, limit, dataset);
 
-export const listProfiles = async (req: Request, res: Response) => {
-  const gender = getCaseInsensitiveFilter(req.query.gender, "gender");
-  const country_id = getCaseInsensitiveFilter(
-    req.query.country_id,
-    "country_id",
-  );
-  const age_group = getCaseInsensitiveFilter(req.query.age_group, "age_group");
+    if (!profiles) {
+      return res.status(400).json({
+        status: "error",
+        message: "Unable to interpret query",
+      });
+    }
 
-  const profiles = await listProfilesByFilter({
-    gender,
-    country_id,
-    age_group,
-  });
+    return res.status(200).json({
+      status: "success",
+      page: profiles.page,
+      limit: profiles.limit,
+      total: profiles.total,
+      data:
+        dataset === "v1"
+          ? profiles.data.map(toV1ResponseProfile)
+          : profiles.data.map(toResponseProfile),
+    });
+  };
 
-  return res.status(200).json({
-    status: "success",
-    count: profiles.length,
-    data: profiles.map(toListResponseProfile),
-  });
-};
+const deleteProfileForDataset =
+  (dataset: ProfileDataset) => async (req: Request, res: Response) => {
+    const id = getIdParam(req.params.id);
+    await deleteProfileById(id, dataset);
 
-export const deleteProfile = async (req: Request, res: Response) => {
-  const id = getIdParam(req.params.id);
-  await deleteProfileById(id);
+    return res.status(204).send();
+  };
 
-  return res.status(204).send();
-};
+export const createProfile = createProfileForDataset("v2");
+export const getProfile = getProfileForDataset("v2");
+export const listProfiles = listProfilesForDataset("v2");
+export const searchProfiles = searchProfilesForDataset("v2");
+export const deleteProfile = deleteProfileForDataset("v2");
+
+export const createV1Profile = createProfileForDataset("v1");
+export const getV1Profile = getProfileForDataset("v1");
+export const listV1Profiles = listProfilesForDataset("v1");
+export const searchV1Profiles = searchProfilesForDataset("v1");
+export const deleteV1Profile = deleteProfileForDataset("v1");

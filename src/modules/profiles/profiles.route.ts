@@ -4,6 +4,7 @@ import {
   deleteProfile,
   getProfile,
   listProfiles,
+  searchProfiles,
 } from "./profiles.controller";
 import { methodNotAllowedHandler } from "@/middlewares";
 
@@ -14,6 +15,11 @@ router
   .post(createProfile)
   .get(listProfiles)
   .all(methodNotAllowedHandler(["POST", "GET"]));
+
+router
+  .route("/search")
+  .get(searchProfiles)
+  .all(methodNotAllowedHandler(["GET"]));
 
 router
   .route("/:id")
