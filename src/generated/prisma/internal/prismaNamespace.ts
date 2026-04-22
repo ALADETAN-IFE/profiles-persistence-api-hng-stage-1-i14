@@ -556,12 +556,14 @@ export type TransactionIsolationLevel =
 export const ProfileScalarFieldEnum = {
   id: "id",
   name: "name",
+  dataset: "dataset",
   gender: "gender",
   gender_probability: "gender_probability",
   sample_size: "sample_size",
   age: "age",
   age_group: "age_group",
   country_id: "country_id",
+  country_name: "country_name",
   country_probability: "country_probability",
   created_at: "created_at",
 } as const;
