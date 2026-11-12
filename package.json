@@ -4,9 +4,9 @@
   "description": "Backend Stage 1 Profiles Persistence API - hng-stage-1(i14)",
   "main": "index.js",
   "scripts": {
-    "dev": "node api.js && ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
-    "start": "node api.js && node -r module-alias/register dist/server.js",
-    "build": "node api.js && tsc",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
+    "start": "node -r module-alias/register dist/server.js",
+    "build": "tsc",
     "seed": "node -r ts-node/register -r tsconfig-paths/register src/data/seed.ts",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,json}\"",
